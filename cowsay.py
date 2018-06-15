@@ -24,7 +24,6 @@ def bubble(text):
             else:
                 middle += '\n' + '| ' + text + '|'  
             
-
             bottom = top.replace('_', '-')        
     bubble = top + '\n' + middle + '\n' + bottom
     return bubble
@@ -39,14 +38,11 @@ def cow():
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print(f'Try again.\nUsage: {sys.argv[0]} [-h] [-l] message')
-        exit()
+        print(f'Try again.\nUsage: {sys.argv[0]} [-h] [-l] message')     
     elif len(sys.argv) == 2 and sys.argv[1] == '-h':
-        print(f'Usage: {sys.argv[0]} [-h] [-l] message')
-        exit()
+        print(f'Usage: {sys.argv[0]} [-h] [-l] message')    
     elif len(sys.argv) == 2 and sys.argv[1] == '-l':
-        print('default')
-        exit()
+        print('default')        
     else:
         sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py']) 
         print(cowsay(sentence))    
