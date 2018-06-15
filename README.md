@@ -5,7 +5,7 @@ See cowsay original website [**here**](https://web.archive.org/web/2007102604364
 
 To learn more about cowsay click [Here](https://en.wikipedia.org/wiki/Cowsay) (wikipedia)
 
-Here's an example of what a typical cowsay output looks like
+Here's an example of what a typical cowsay output looks like:
 
 ![Python cowsay](https://i.imgur.com/TNFl65L.png)
 
