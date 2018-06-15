@@ -6,27 +6,26 @@ def cowsay(text):
 
 def bubble(text):
 
-    lines = wrap(text, 40)
+    lines = wrap(text, 38)
 
     bubble = ''
     if len(lines) == 1:
         top = ' ' + '_' * (len(text)+2) + ' '
         middle = '< ' + text + ' >'
-        bottom =' ' + '-' * (len(text)+2) + ' '  
+        bottom =' ' + '-' * (len(text)+2) + ' '
     else:
-        top = ' ' + '_'* 40 + ' '
-        middle = ''
         for i in range(0, len(lines)):
+            top = ' ' + '_' * (len(lines[i]) + 40 - len(lines[i]))
             if i == 0:
-                middle += '/ ' + lines[i] + ' \\'
-            elif i == len(lines) -1 :
-                middle += '\n' + r'\ ' + lines[i]
-                middle = middle + ' ' * (len(lines[0]) - len(lines[i])) + ' /'
+                print(len(lines[i])-len(top))
+                middle = '/ ' + lines[i] + ' ' * (len(top) - 2 - len(lines[i])) + '\\'
+            elif i == len(lines) -1:
+                middle += '\n' + '\\ ' + lines[i] + ' ' * (len(top) - 2 - len(lines[i])) + '/'
             else:
-                middle += '\n| ' + lines[i]
-                middle += ' ' * (len(lines[0]) - len(lines[i])) + ' |'
-        bottom = ' ' + '-'* 40 + ' ' 
-    
+                middle += '\n' + '| ' + lines[i] + ' ' * (len(top) - 2 - len(lines[i])) + '|'  
+            
+
+            bottom = top.replace('_', '-')        
     bubble = top + '\n' + middle + '\n' + bottom
     return bubble
 
