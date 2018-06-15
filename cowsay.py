@@ -16,13 +16,13 @@ def bubble(text):
     else:
         for i in range(0, len(lines)):
             top = ' ' + '_' * (len(lines[i]) + 40 - len(lines[i]))
+            text = lines[i] + ' ' * (len(top) - 2 - len(lines[i]))
             if i == 0:
-                print(len(lines[i])-len(top))
-                middle = '/ ' + lines[i] + ' ' * (len(top) - 2 - len(lines[i])) + '\\'
+                middle = '/ ' + text + '\\'
             elif i == len(lines) -1:
-                middle += '\n' + '\\ ' + lines[i] + ' ' * (len(top) - 2 - len(lines[i])) + '/'
+                middle += '\n' + '\\ ' + text + '/'
             else:
-                middle += '\n' + '| ' + lines[i] + ' ' * (len(top) - 2 - len(lines[i])) + '|'  
+                middle += '\n' + '| ' + text + '|'  
             
 
             bottom = top.replace('_', '-')        
@@ -39,15 +39,21 @@ def cow():
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print(f'Usage:\n{sys.argv[0]} -l\n{sys.argv[0]} -h\n{sys.argv[0]} message')
+        print(f'Try again.\nUsage:{sys.argv[0]} [-h] [-l] message')
         exit()
+    if len(sys.argv) == 2 and sys.argv[1] == '-h':
+        print(f'Usage: {sys.argv[0]} [-h] [-l] message')
+        exit()
+    elif len(sys.argv) == 2 and sys.argv[1] == '-l':
+        print('default')
+        exit()
+    else:
+        sentence = ''
+        for arg in sys.argv:
+            if arg != 'cowsay.py':
+                if not sentence:
+                    sentence = arg
+                else:
+                    sentence = sentence + ' ' + arg
 
-    sentence = ''
-    for arg in sys.argv:
-        if arg != 'cowsay.py':
-            if not sentence:
-                sentence = arg
-            else:
-                sentence = sentence + ' ' + arg
-
-    print(cowsay(sentence))    
+        print(cowsay(sentence))    
