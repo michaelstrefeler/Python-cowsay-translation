@@ -39,21 +39,14 @@ def cow():
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print(f'Try again.\nUsage:{sys.argv[0]} [-h] [-l] message')
+        print(f'Try again.\nUsage: {sys.argv[0]} [-h] [-l] message')
         exit()
-    if len(sys.argv) == 2 and sys.argv[1] == '-h':
+    elif len(sys.argv) == 2 and sys.argv[1] == '-h':
         print(f'Usage: {sys.argv[0]} [-h] [-l] message')
         exit()
     elif len(sys.argv) == 2 and sys.argv[1] == '-l':
         print('default')
         exit()
     else:
-        sentence = ''
-        for arg in sys.argv:
-            if arg != 'cowsay.py':
-                if not sentence:
-                    sentence = arg
-                else:
-                    sentence = sentence + ' ' + arg
-
+        sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py']) 
         print(cowsay(sentence))    
