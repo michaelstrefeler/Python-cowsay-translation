@@ -52,14 +52,17 @@ def cowsay(text, animal='default'):
         if 'sheep' in animal:
             eyes = eyes.lower()
         tongue = 'U '
-        text = text.replace(' -d ', '').replace(eyes, '')
+        text = text.replace('-d', '').replace(' -d', '').replace(' -d ', '').replace(eyes, '')
     # Adds a third eye if three-eyes is selected
     if animal == 'three-eyes':
         eyes = eyes + eyes[0]                    
     return bubble(text) + cow(animal, eyes, tongue)
 
 def bubble(text):
-
+    print(text)
+    if text == '':
+        print('cowsay: No text was entered after the parameters')
+        exit()
     lines = wrap(text, 38)
 
     bubble = ''
