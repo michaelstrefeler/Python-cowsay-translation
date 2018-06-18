@@ -25,3 +25,4 @@ python cowsay.py Type your message here
 * ~~Add cowsay -l to list all the cows~~
 * ~~Add the different optional parameters like -g to replace eyes with $$ and more~~
 * Optimize code
+* Fix error when nothing is after -e or -T
