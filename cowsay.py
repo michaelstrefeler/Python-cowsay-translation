@@ -1,8 +1,11 @@
 import sys
+from subprocess import Popen
 from textwrap import wrap
 
-def cowsay(text):
-    return bubble(text) + cow()
+cow_list = ['bong', 'default']
+
+def cowsay(text, animal='default'):
+    return bubble(text) + cow(animal)
 
 def bubble(text):
 
@@ -28,21 +31,30 @@ def bubble(text):
     bubble = top + '\n' + middle + '\n' + bottom
     return bubble
 
-def cow():
-    return r"""
+def cow(animal):
+    if animal == 'default':
+        return r"""
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
                 ||----w |
                 ||     ||"""    
+    else:
+        with open(f'cows/{animal}.txt', 'r') as myAnimal:
+            data = myAnimal.read()  
+        return '\n' + data
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         print(f'Try again.\nUsage: {sys.argv[0]} [-h] [-l] message')     
-    elif len(sys.argv) == 2 and sys.argv[1] == '-h':
+    elif len(sys.argv) >= 2 and sys.argv[1] == '-h':
         print(f'Usage: {sys.argv[0]} [-h] [-l] message')    
-    elif len(sys.argv) == 2 and sys.argv[1] == '-l':
-        print('default')        
+    elif len(sys.argv) >= 2 and sys.argv[1] == '-l':
+        print(' '.join([cow for cow in cow_list]))
+    elif sys.argv[1] == '-f':
+        animal = sys.argv[2]
+        sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py' and arg != '-f' and arg != animal])
+        print(cowsay(sentence, animal))             
     else:
         sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py']) 
-        print(cowsay(sentence))    
+        print(cowsay(sentence, 'default'))    
