@@ -53,7 +53,10 @@ if __name__ == '__main__':
     elif sys.argv[1] == '-f':
         animal = sys.argv[2]
         sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py' and arg != '-f' and arg != animal])
-        print(cowsay(sentence, animal))             
+        if animal in cow_list:
+            print(cowsay(sentence, animal))
+        else:
+            print(f'cowsay: Could not find {animal} cowfile')                 
     else:
         sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py']) 
         print(cowsay(sentence, 'default'))    
