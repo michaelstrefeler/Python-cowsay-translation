@@ -23,5 +23,5 @@ python cowsay.py Type your message here
 * ~~Add the ability to show help with cowsay -h~~
 * ~~Add other "cows"~~
 * ~~Add cowsay -l to list all the cows~~
-* Add the different optional parameters like -g to replace eyes with $$ and more
+* ~~Add the different optional parameters like -g to replace eyes with $$ and more~~
 * Optimize code
