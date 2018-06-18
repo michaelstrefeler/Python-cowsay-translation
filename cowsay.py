@@ -1,5 +1,4 @@
 import sys
-from subprocess import Popen
 from textwrap import wrap
 
 cow_list = ['bong', 'default']
