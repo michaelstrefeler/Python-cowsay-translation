@@ -1,7 +1,7 @@
 import sys
 from textwrap import wrap
 
-cow_list = ['bong', 'default']
+cow_list = ['apt', 'beavis.zen', 'bong', 'bud-frogs', 'bunny', 'calvin', 'cheese', 'cock', 'cower', 'daemon', 'default', 'dragon', 'dragon-and-cow', 'duck', 'elephant', 'elephant-in-snake', 'eyes', 'flaming-sheep', 'ghostbusters', 'gnu', 'head-in', 'hellokitty', 'kiss', 'kitty', 'koala', 'kosh', 'luke-koala', 'mech-and-cow', 'meow', 'milk', 'moofasa', 'moose', 'mutilated', 'pony', 'pony-smaller', 'ren', 'satanic', 'sheep', 'skeleton', 'snowman', 'small', 'sodomized', 'sodomized-sheep', 'stegosaurus', 'stimpy', 'supermilker', 'surgery', 'suse', 'three-eyes', 'turkey', 'turtle', 'tux', 'udder', 'unipony', 'unipony-smaller', 'vader', 'vader-koala', 'www']
 
 def cowsay(text, animal='default'):
     return bubble(text) + cow(animal)
@@ -31,17 +31,9 @@ def bubble(text):
     return bubble
 
 def cow(animal):
-    if animal == 'default':
-        return r"""
-        \   ^__^
-         \  (oo)\_______
-            (__)\       )\/\
-                ||----w |
-                ||     ||"""    
-    else:
-        with open(f'cows/{animal}.txt', 'r') as myAnimal:
-            data = myAnimal.read()  
-        return '\n' + data
+    with open(f'cows/{animal}.txt', 'r') as myAnimal:
+        data = myAnimal.read()  
+    return '\n' + data
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
@@ -52,7 +44,7 @@ if __name__ == '__main__':
         print(' '.join([cow for cow in cow_list]))
     elif sys.argv[1] == '-f':
         animal = sys.argv[2]
-        sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py' and arg != '-f' and arg != animal])
+        sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py' and arg != '-f']).partition(' ')[2] # Removes cowfile name from sentence
         if animal in cow_list:
             print(cowsay(sentence, animal))
         else:
