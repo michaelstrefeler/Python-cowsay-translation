@@ -91,7 +91,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print(f'Try again.\nUsage: {sys.argv[0]} [-h] [-l] message')     
     elif len(sys.argv) >= 2 and '-h' in sys.argv:
-        print(f'Usage: {sys.argv[0]} [-h] [-l] [-f cowfile] message')    
+        print(f'Usage: {sys.argv[0]} [-h] [-l] [-f cowfile] [-e eyes] [-T tongue] message')    
     elif len(sys.argv) >= 2 and '-l' in sys.argv:
         print(' '.join([cow for cow in cow_list]))
     elif sys.argv[1] == '-f':
