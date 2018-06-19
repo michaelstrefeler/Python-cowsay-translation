@@ -1,6 +1,7 @@
 import sys
 from textwrap import wrap
 
+# List of all available cows
 cow_list = ['apt', 'beavis.zen', 'bong', 'bud-frogs', 'bunny', 'calvin', 'cheese', 'cock', 'cower', 'daemon', 'default', 'dragon', 'dragon-and-cow', 'duck', 'elephant', 'elephant-in-snake', 'eyes', 'flaming-sheep', 'ghostbusters', 'gnu', 'head-in', 'hellokitty', 'kiss', 'kitty', 'koala', 'kosh', 'luke-koala', 'mech-and-cow', 'meow', 'milk', 'moofasa', 'moose', 'mutilated', 'pony', 'pony-smaller', 'ren', 'satanic', 'sheep', 'skeleton', 'snowman', 'small', 'sodomized', 'sodomized-sheep', 'stegosaurus', 'stimpy', 'supermilker', 'surgery', 'suse', 'three-eyes', 'turkey', 'turtle', 'tux', 'udder', 'unipony', 'unipony-smaller', 'vader', 'vader-koala', 'www']
 
 def cowsay(text, animal='default'):
@@ -13,28 +14,28 @@ def cowsay(text, animal='default'):
     # "Bord mode", uses == in place of oo for the cow's eyes
     if '-b' in sys.argv:
         eyes = '=='
-        text = text.replace(f'-b ', '')
+        text = text.replace('-b ', '')
     # "Greedy", uses $$
     if '-g' in sys.argv:
         eyes = '$$'
-        text = text.replace(f'-g ', '')  
+        text = text.replace('-g ', '')  
     # "paranoid", uses @@
     if '-p' in sys.argv:
         eyes = '@@'
-        text = text.replace(f'-p ', '')
+        text = text.replace('-p ', '')
     # "Stoned", uses ** to represent bloodshot eyes, plus a descending U to represent an extruded tongue
     if '-s' in sys.argv:
         eyes = '**'
         tongue = 'U '
-        text = text.replace(f'-s ', '')
+        text = text.replace('-s ', '')
     # "Tired", uses --
     if '-t' in sys.argv:
         eyes = '--'
-        text = text.replace(f'-t ', '')
+        text = text.replace('-t ', '')
     # "Wired", uses OO
     if '-w' in sys.argv:
         eyes = 'OO'
-        text = text.replace(f'-w ', '')                   
+        text = text.replace('-w ', '')                   
     # "Youthful", uses .. to represent smaller eyes
     if animal == 'small' or '-y' in sys.argv:
         eyes = '..'      
@@ -45,6 +46,7 @@ def cowsay(text, animal='default'):
         if len(tongue) < 2:
             tongue = tongue + ' '    
         text = text.replace(f'-T {tongue}', '')
+
    # "Dead", uses XX, plus a descending U to represent an extruded tongue
     if '-d' in sys.argv:
         if eyes == '':
@@ -53,6 +55,7 @@ def cowsay(text, animal='default'):
             eyes = eyes.lower()
         tongue = 'U '
         text = text.replace('-d', '').replace(' -d', '').replace(' -d ', '').replace(eyes, '')
+        
     # Adds a third eye if three-eyes is selected
     if animal == 'three-eyes':
         eyes = eyes + eyes[0]                    
