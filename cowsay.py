@@ -9,8 +9,16 @@ def cowsay(text, animal='default'):
     tongue = '  '
     # Manually specifies the cow's eye-type
     if '-e' in sys.argv:
-        eyes = sys.argv[sys.argv.index('-e')+1][:2]
-        text = text.replace(f'-e {eyes}', '')
+        if sys.argv.index('-e')+1 in range(0, len(sys.argv)):
+            if sys.argv.index('-e')+2 in range(0, len(sys.argv)):
+                eyes = sys.argv[sys.argv.index('-e')+1][:2]
+                text = text.replace(f'-e {sys.argv[sys.argv.index("-e")+1]} ', '')
+            else:
+                print('cowsay: error no text added after -e eye_string')
+                exit()        
+        else:
+            print('cowsay: error no text added after -e')
+            exit()                
     # "Bord mode", uses == in place of oo for the cow's eyes
     if '-b' in sys.argv:
         eyes = '=='
@@ -42,10 +50,22 @@ def cowsay(text, animal='default'):
     
     # Manually specifies the cow's tongue shape
     if '-T' in sys.argv:
-        tongue = sys.argv[sys.argv.index('-T')+1][:2]
+        if sys.argv.index('-T')+1 in range(0, len(sys.argv)):
+            if sys.argv.index('-T')+2 in range(0, len(sys.argv)):
+                tongue = sys.argv[sys.argv.index('-T')+1][:2]
+                if len(tongue) < 2:
+                    tongue = tongue + ' '    
+                text = text.replace(f'-T {tongue}', '')
+            else:
+                print('cowsay: error no text added after -T tongue_string')
+                exit()        
+        else:
+            print('cowsay: error no text added after -T')
+            exit()
+        '''tongue = sys.argv[sys.argv.index('-T')+1][:2]
         if len(tongue) < 2:
             tongue = tongue + ' '    
-        text = text.replace(f'-T {tongue}', '')
+        text = text.replace(f'-T {tongue}', '')'''
 
    # "Dead", uses XX, plus a descending U to represent an extruded tongue
     if '-d' in sys.argv:
@@ -55,14 +75,13 @@ def cowsay(text, animal='default'):
             eyes = eyes.lower()
         tongue = 'U '
         text = text.replace('-d', '').replace(' -d', '').replace(' -d ', '').replace(eyes, '')
-        
+
     # Adds a third eye if three-eyes is selected
     if animal == 'three-eyes':
         eyes = eyes + eyes[0]                    
     return bubble(text) + cow(animal, eyes, tongue)
 
 def bubble(text):
-    print(text)
     if text == '':
         print('cowsay: No text was entered after the parameters')
         exit()
