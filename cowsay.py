@@ -1,4 +1,4 @@
-import sys
+from sys import argv
 from textwrap import wrap
 
 # List of all available cows
@@ -8,51 +8,51 @@ def cowsay(text, animal='default'):
     eyes = 'oo'
     tongue = '  '
     # Manually specifies the cow's eye-type
-    if '-e' in sys.argv:
-        if sys.argv.index('-e')+1 in range(0, len(sys.argv)):
-            if sys.argv.index('-e')+2 in range(0, len(sys.argv)):
-                eyes = sys.argv[sys.argv.index('-e')+1][:2]
-                text = text.replace(f'-e {sys.argv[sys.argv.index("-e")+1]} ', '')
+    if '-e' in argv:
+        if argv.index('-e')+1 in range(0, len(argv)):
+            if argv.index('-e')+2 in range(0, len(argv)):
+                eyes = argv[argv.index('-e')+1][:2]
+                text = text.replace(f'-e {argv[argv.index("-e")+1]} ', '')
             else:
                 print('cowsay: error no text added after -e eye_string')
                 exit()        
         else:
             print('cowsay: error no text added after -e')
             exit()                
-    # "Bord mode", uses == in place of oo for the cow's eyes
-    if '-b' in sys.argv:
+    # "Borg mode", uses == in place of oo for the cow's eyes
+    if '-b' in argv:
         eyes = '=='
         text = text.replace('-b ', '')
     # "Greedy", uses $$
-    if '-g' in sys.argv:
+    if '-g' in argv:
         eyes = '$$'
         text = text.replace('-g ', '')  
     # "paranoid", uses @@
-    if '-p' in sys.argv:
+    if '-p' in argv:
         eyes = '@@'
         text = text.replace('-p ', '')
     # "Stoned", uses ** to represent bloodshot eyes, plus a descending U to represent an extruded tongue
-    if '-s' in sys.argv:
+    if '-s' in argv:
         eyes = '**'
         tongue = 'U '
         text = text.replace('-s ', '')
     # "Tired", uses --
-    if '-t' in sys.argv:
+    if '-t' in argv:
         eyes = '--'
         text = text.replace('-t ', '')
     # "Wired", uses OO
-    if '-w' in sys.argv:
+    if '-w' in argv:
         eyes = 'OO'
         text = text.replace('-w ', '')                   
     # "Youthful", uses .. to represent smaller eyes
-    if animal == 'small' or '-y' in sys.argv:
+    if animal == 'small' or '-y' in argv:
         eyes = '..'      
-    
+        text = text.replace('-y ', '')
     # Manually specifies the cow's tongue shape
-    if '-T' in sys.argv:
-        if sys.argv.index('-T')+1 in range(0, len(sys.argv)):
-            if sys.argv.index('-T')+2 in range(0, len(sys.argv)):
-                tongue = sys.argv[sys.argv.index('-T')+1][:2]
+    if '-T' in argv:
+        if argv.index('-T')+1 in range(0, len(argv)):
+            if argv.index('-T')+2 in range(0, len(argv)):
+                tongue = argv[argv.index('-T')+1][:2]
                 if len(tongue) < 2:
                     tongue = tongue + ' '    
                 text = text.replace(f'-T {tongue}', '')
@@ -64,13 +64,13 @@ def cowsay(text, animal='default'):
             exit()
 
    # "Dead", uses XX, plus a descending U to represent an extruded tongue
-    if '-d' in sys.argv:
-        if eyes == '':
+    if '-d' in argv:
+        if eyes == 'oo':
             eyes = 'XX'
         if 'sheep' in animal:
             eyes = eyes.lower()
         tongue = 'U '
-        text = text.replace('-d', '').replace(' -d', '').replace(' -d ', '').replace(eyes, '')
+        text = text.replace('-d ', '').replace(eyes, '')
 
     # Adds a third eye if three-eyes is selected
     if animal == 'three-eyes':
@@ -109,19 +109,19 @@ def cow(animal, eyes, tongue):
     return '\n' + data
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print(f'Try again.\nUsage: {sys.argv[0]} [-h] [-l] message')     
-    elif len(sys.argv) >= 2 and '-h' in sys.argv:
-        print(f'Usage: {sys.argv[0]} [-h] [-l] [-f cowfile] [-e eyes] [-T tongue] message')    
-    elif len(sys.argv) >= 2 and '-l' in sys.argv:
+    if len(argv) < 2:
+        print(f'Try again.\nUsage: {argv[0]} [-h] [-l] message')     
+    elif len(argv) >= 2 and '-h' in argv:
+        print(f'Usage: {argv[0]} [-h] [-l] [-f cowfile] [-e eyes] [-T tongue] message')    
+    elif len(argv) >= 2 and '-l' in argv:
         print(' '.join([cow for cow in cow_list]))
-    elif sys.argv[1] == '-f':
-        animal = sys.argv[2]
-        sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py' and arg != '-f']).partition(' ')[2] # Removes cowfile name from sentence
-        if animal in cow_list:
+    elif argv[1] == '-f':
+        animal = argv[2]
+        sentence = ' '.join([arg for arg in argv if arg != argv[0] and arg != '-f']).partition(' ')[2].replace(f'{animal} ', '',1) # Removes cowfile name from sentence
+        if animal.lower() in cow_list:
             print(cowsay(sentence, animal))
         else:
             print(f'cowsay: Could not find {animal} cowfile')                 
     else:
-        sentence = ' '.join([arg for arg in sys.argv if arg != 'cowsay.py']) 
-        print(cowsay(sentence, 'default'))    
+        sentence = ' '.join([arg for arg in argv if arg != argv[0]]) 
+        print(cowsay(sentence))
