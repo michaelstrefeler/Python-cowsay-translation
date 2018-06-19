@@ -62,10 +62,6 @@ def cowsay(text, animal='default'):
         else:
             print('cowsay: error no text added after -T')
             exit()
-        '''tongue = sys.argv[sys.argv.index('-T')+1][:2]
-        if len(tongue) < 2:
-            tongue = tongue + ' '    
-        text = text.replace(f'-T {tongue}', '')'''
 
    # "Dead", uses XX, plus a descending U to represent an extruded tongue
     if '-d' in sys.argv:
