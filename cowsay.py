@@ -31,36 +31,44 @@ def cowsay(text, animal='default'):
         else:
             print('cowsay: error no text added after -e')
             exit()
+
     # "Borg mode", uses == in place of oo for the cow's eyes
     if '-b' in argv:
         eyes = '=='
         text = text.replace('-b ', '')
+
     # "Greedy", uses $$
     if '-g' in argv:
         eyes = '$$'
         text = text.replace('-g ', '')
+
     # "paranoid", uses @@
     if '-p' in argv:
         eyes = '@@'
         text = text.replace('-p ', '')
     # "Stoned", uses ** to represent bloodshot eyes
     # plus a descending U to represent an extruded tongue
+
     if '-s' in argv:
         eyes = '**'
         tongue = 'U '
         text = text.replace('-s ', '')
+
     # "Tired", uses --
     if '-t' in argv:
         eyes = '--'
         text = text.replace('-t ', '')
+
     # "Wired", uses OO
     if '-w' in argv:
         eyes = 'OO'
         text = text.replace('-w ', '')
+
     # "Youthful", uses .. to represent smaller eyes
     if animal == 'small' or '-y' in argv:
         eyes = '..'
         text = text.replace('-y ', '')
+
     # Manually specifies the cow's tongue shape
     if '-T' in argv:
         if argv.index('-T')+1 in range(0, len(argv)):
@@ -120,24 +128,36 @@ def bubble(text):
 
 def cow(animal, eyes, tongue):
     with open(f'cows/{animal}.txt', 'r') as myAnimal:
-        data = myAnimal.read().replace('$eyes', eyes).replace('$tongue', tongue)
+        data = myAnimal.read().replace('$eyes', eyes)
+        data = data.replace('$tongue', tongue)
     return '\n' + data
 
 
-if __name__ == '__main__':
+def handler():
     if len(argv) < 2:
         print(f'Try again.\nUsage: {argv[0]} [-h] [-l] message')
+
     elif len(argv) >= 2 and '-h' in argv:
-        print(f'Usage: {argv[0]} [-h] [-l] [-f cowfile] [-e eyes] [-T tongue] message')
+        params = '[-h] [-l] [-f cowfile] [-e eyes] [-T tongue] message'
+        print(f'Usage: {argv[0]} {params}')
+
     elif len(argv) >= 2 and '-l' in argv:
         print(' '.join([cow for cow in cow_list]))
+
     elif argv[1] == '-f':
         animal = argv[2]
-        sentence = ' '.join([arg for arg in argv if arg != argv[0] and arg != '-f']).partition(' ')[2].replace(f'{animal} ', '', 1)
+        words = [arg for arg in argv if arg != argv[0] and arg != '-f']
+        text = ' '.join([word for word in words])
+        text = text.partition(' ')[2].replace(f'{animal} ', '', 1)
+
         if animal.lower() in cow_list:
-            print(cowsay(sentence, animal))
+            print(cowsay(text, animal))
         else:
             print(f'cowsay: Could not find {animal} cowfile')
     else:
-        sentence = ' '.join([arg for arg in argv if arg != argv[0]])
-        print(cowsay(sentence))
+        text = ' '.join([arg for arg in argv if arg != argv[0]])
+        print(cowsay(text))
+
+
+if __name__ == '__main__':
+    handler()
