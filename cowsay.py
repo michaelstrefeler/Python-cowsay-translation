@@ -2,7 +2,19 @@ from sys import argv
 from textwrap import wrap
 
 # List of all available cows
-cow_list = ['apt', 'beavis.zen', 'bong', 'bud-frogs', 'bunny', 'calvin', 'cheese', 'cock', 'cower', 'daemon', 'default', 'dragon', 'dragon-and-cow', 'duck', 'elephant', 'elephant-in-snake', 'eyes', 'flaming-sheep', 'ghostbusters', 'gnu', 'head-in', 'hellokitty', 'kiss', 'kitty', 'koala', 'kosh', 'luke-koala', 'mech-and-cow', 'meow', 'milk', 'moofasa', 'moose', 'mutilated', 'pony', 'pony-smaller', 'ren', 'satanic', 'sheep', 'skeleton', 'snowman', 'small', 'sodomized', 'sodomized-sheep', 'stegosaurus', 'stimpy', 'supermilker', 'surgery', 'suse', 'three-eyes', 'turkey', 'turtle', 'tux', 'udder', 'unipony', 'unipony-smaller', 'vader', 'vader-koala', 'www']
+cow_list = [
+    'apt', 'beavis.zen', 'bong', 'bud-frogs', 'bunny', 'calvin', 'cheese',
+    'cock', 'cower', 'daemon', 'default', 'dragon', 'dragon-and-cow', 'duck',
+    'elephant', 'elephant-in-snake', 'eyes', 'flaming-sheep', 'ghostbusters',
+    'gnu', 'head-in', 'hellokitty', 'kiss', 'kitty', 'koala', 'kosh',
+    'luke-koala', 'mech-and-cow', 'meow', 'milk', 'moofasa', 'moose',
+    'mutilated', 'pony', 'pony-smaller', 'ren', 'satanic', 'sheep', 'skeleton',
+    'snowman', 'small', 'sodomized', 'sodomized-sheep', 'stegosaurus',
+    'stimpy', 'supermilker', 'surgery', 'suse', 'three-eyes', 'turkey',
+    'turtle', 'tux', 'udder', 'unipony', 'unipony-smaller', 'vader',
+    'vader-koala', 'www'
+]
+
 
 def cowsay(text, animal='default'):
     eyes = 'oo'
@@ -15,10 +27,10 @@ def cowsay(text, animal='default'):
                 text = text.replace(f'-e {argv[argv.index("-e")+1]} ', '')
             else:
                 print('cowsay: error no text added after -e eye_string')
-                exit()        
+                exit()
         else:
             print('cowsay: error no text added after -e')
-            exit()                
+            exit()
     # "Borg mode", uses == in place of oo for the cow's eyes
     if '-b' in argv:
         eyes = '=='
@@ -26,12 +38,13 @@ def cowsay(text, animal='default'):
     # "Greedy", uses $$
     if '-g' in argv:
         eyes = '$$'
-        text = text.replace('-g ', '')  
+        text = text.replace('-g ', '')
     # "paranoid", uses @@
     if '-p' in argv:
         eyes = '@@'
         text = text.replace('-p ', '')
-    # "Stoned", uses ** to represent bloodshot eyes, plus a descending U to represent an extruded tongue
+    # "Stoned", uses ** to represent bloodshot eyes
+    # plus a descending U to represent an extruded tongue
     if '-s' in argv:
         eyes = '**'
         tongue = 'U '
@@ -43,10 +56,10 @@ def cowsay(text, animal='default'):
     # "Wired", uses OO
     if '-w' in argv:
         eyes = 'OO'
-        text = text.replace('-w ', '')                   
+        text = text.replace('-w ', '')
     # "Youthful", uses .. to represent smaller eyes
     if animal == 'small' or '-y' in argv:
-        eyes = '..'      
+        eyes = '..'
         text = text.replace('-y ', '')
     # Manually specifies the cow's tongue shape
     if '-T' in argv:
@@ -54,16 +67,16 @@ def cowsay(text, animal='default'):
             if argv.index('-T')+2 in range(0, len(argv)):
                 tongue = argv[argv.index('-T')+1][:2]
                 if len(tongue) < 2:
-                    tongue = tongue + ' '    
+                    tongue = tongue + ' '
                 text = text.replace(f'-T {tongue}', '')
             else:
                 print('cowsay: error no text added after -T tongue_string')
-                exit()        
+                exit()
         else:
             print('cowsay: error no text added after -T')
             exit()
 
-   # "Dead", uses XX, plus a descending U to represent an extruded tongue
+    # "Dead", uses XX, plus a descending U to represent an extruded tongue
     if '-d' in argv:
         if eyes == 'oo':
             eyes = 'XX'
@@ -74,8 +87,9 @@ def cowsay(text, animal='default'):
 
     # Adds a third eye if three-eyes is selected
     if animal == 'three-eyes':
-        eyes = eyes + eyes[0]                    
+        eyes = eyes + eyes[0]
     return bubble(text) + cow(animal, eyes, tongue)
+
 
 def bubble(text):
     if text == '':
@@ -87,41 +101,43 @@ def bubble(text):
     if len(lines) == 1:
         top = ' ' + '_' * (len(text)+2) + ' '
         middle = '< ' + text + ' >'
-        bottom =' ' + '-' * (len(text)+2) + ' '
+        bottom = ' ' + '-' * (len(text)+2) + ' '
     else:
         for i in range(0, len(lines)):
             top = ' ' + '_' * (len(lines[i]) + 40 - len(lines[i]))
             text = lines[i] + ' ' * (len(top) - 2 - len(lines[i]))
             if i == 0:
                 middle = '/ ' + text + '\\'
-            elif i == len(lines) -1:
+            elif i == len(lines) - 1:
                 middle += '\n' + '\\ ' + text + '/'
             else:
-                middle += '\n' + '| ' + text + '|'  
-            
-            bottom = top.replace('_', '-')        
+                middle += '\n' + '| ' + text + '|'
+
+            bottom = top.replace('_', '-')
     bubble = top + '\n' + middle + '\n' + bottom
     return bubble
 
+
 def cow(animal, eyes, tongue):
     with open(f'cows/{animal}.txt', 'r') as myAnimal:
-        data = myAnimal.read().replace('$eyes', eyes).replace('$tongue', tongue)  
+        data = myAnimal.read().replace('$eyes', eyes).replace('$tongue', tongue)
     return '\n' + data
+
 
 if __name__ == '__main__':
     if len(argv) < 2:
-        print(f'Try again.\nUsage: {argv[0]} [-h] [-l] message')     
+        print(f'Try again.\nUsage: {argv[0]} [-h] [-l] message')
     elif len(argv) >= 2 and '-h' in argv:
-        print(f'Usage: {argv[0]} [-h] [-l] [-f cowfile] [-e eyes] [-T tongue] message')    
+        print(f'Usage: {argv[0]} [-h] [-l] [-f cowfile] [-e eyes] [-T tongue] message')
     elif len(argv) >= 2 and '-l' in argv:
         print(' '.join([cow for cow in cow_list]))
     elif argv[1] == '-f':
         animal = argv[2]
-        sentence = ' '.join([arg for arg in argv if arg != argv[0] and arg != '-f']).partition(' ')[2].replace(f'{animal} ', '',1) # Removes cowfile name from sentence
+        sentence = ' '.join([arg for arg in argv if arg != argv[0] and arg != '-f']).partition(' ')[2].replace(f'{animal} ', '', 1)
         if animal.lower() in cow_list:
             print(cowsay(sentence, animal))
         else:
-            print(f'cowsay: Could not find {animal} cowfile')                 
+            print(f'cowsay: Could not find {animal} cowfile')
     else:
-        sentence = ' '.join([arg for arg in argv if arg != argv[0]]) 
+        sentence = ' '.join([arg for arg in argv if arg != argv[0]])
         print(cowsay(sentence))
