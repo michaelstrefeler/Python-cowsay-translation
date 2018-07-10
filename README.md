@@ -7,7 +7,7 @@ To learn more about cowsay click [Here](https://en.wikipedia.org/wiki/Cowsay) (w
 
 Here's an example of what a typical cowsay output looks like:
 
-![Python cowsay](https://i.imgur.com/TNFl65L.png)
+![Python cowsay](https://i.imgur.com/1YJ6DoS.png)
 
 ## Usage
 
