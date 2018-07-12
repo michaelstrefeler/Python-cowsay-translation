@@ -14,6 +14,7 @@ Here's an example of what a typical cowsay output looks like:
 Open your favorite terminal and cd to the project folder.
 
 ```bash
+git clone https://github.com/michaelstrefeler/cowsay-python-translation.git
 cd folder/where/project/is
 python cowsay.py Type your message here
 ```
