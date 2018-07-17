@@ -21,9 +21,9 @@ def cowsay(text, animal='default'):
     tongue = '  '
     # Manually specifies the cow's eye-type
     if '-e' in argv:
-        if argv.index('-e')+1 in range(0, len(argv)):
-            if argv.index('-e')+2 in range(0, len(argv)):
-                eyes = argv[argv.index('-e')+1][:2]
+        if argv.index('-e') + 1 in range(0, len(argv)):
+            if argv.index('-e') + 2 in range(0, len(argv)):
+                eyes = argv[argv.index('-e') + 1][:2]
                 text = text.replace(f'-e {argv[argv.index("-e")+1]} ', '')
             else:
                 print('cowsay: error no text added after -e eye_string')
@@ -71,9 +71,9 @@ def cowsay(text, animal='default'):
 
     # Manually specifies the cow's tongue shape
     if '-T' in argv:
-        if argv.index('-T')+1 in range(0, len(argv)):
-            if argv.index('-T')+2 in range(0, len(argv)):
-                tongue = argv[argv.index('-T')+1][:2]
+        if argv.index('-T') + 1 in range(0, len(argv)):
+            if argv.index('-T') + 2 in range(0, len(argv)):
+                tongue = argv[argv.index('-T') + 1][:2]
                 if len(tongue) < 2:
                     tongue = tongue + ' '
                 text = text.replace(f'-T {tongue}', '')
@@ -107,9 +107,9 @@ def bubble(text):
 
     bubble = ''
     if len(lines) == 1:
-        top = ' ' + '_' * (len(text)+2) + ' '
+        top = ' ' + '_' * (len(text) + 2) + ' '
         middle = '< ' + text + ' >'
-        bottom = ' ' + '-' * (len(text)+2) + ' '
+        bottom = ' ' + '-' * (len(text) + 2) + ' '
     else:
         for i in range(0, len(lines)):
             top = ' ' + '_' * (len(lines[i]) + 40 - len(lines[i]))
