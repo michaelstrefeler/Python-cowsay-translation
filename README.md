@@ -21,9 +21,9 @@ python cowsay.py Type your message here
 
 ## TODO
 
-* ~~Add the ability to show help with cowsay -h~~
-* ~~Add other "cows"~~
-* ~~Add cowsay -l to list all the cows~~
-* ~~Add the different optional parameters like -g to replace eyes with $$ and more~~
-* ~~Fix error when nothing is after -e or -T~~
-* Optimize code
+- [x] Add the ability to show help with cowsay -h
+- [x] Add other cowfiles
+- [x] Add cowsay -l to list all the cows
+- [x] Add the different optional parameters like -g to replace eyes with $$ and more
+- [x] Fix error when nothing is after -e or -T
+- [ ] Optimize code
