@@ -101,7 +101,7 @@ def cowsay(text, animal='default'):
 
 def bubble(text):
     if text == '':
-        print('cowsay: No text was entered after the parameters')
+        print('error: No text was entered after the parameters')
         exit()
     lines = wrap(text, 38)
 
