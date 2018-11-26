@@ -1,5 +1,17 @@
-from sys import argv
+from sys import argv, stdout
 from textwrap import wrap
+import logbook
+
+level = logbook.TRACE
+log_filename = 'log.txt'
+
+if not log_filename:
+    logbook.StreamHandler(stdout, level=level).push_application()
+else:
+    logbook.TimedRotatingFileHandler(log_filename, level=level
+                                     ).push_application()
+
+log = logbook.Logger('Cowsay')
 
 # List of all available cows
 cow_list = [
@@ -25,49 +37,61 @@ def cowsay(text, animal='default'):
             if argv.index('-e') + 2 in range(0, len(argv)):
                 eyes = argv[argv.index('-e') + 1][:2]
                 text = text.replace(f'-e {argv[argv.index("-e")+1]} ', '')
+                log.trace(f"Custom eyes selected ({eyes})")
             else:
-                print('cowsay: error no text added after -e eye_string')
+                error = 'No text added after -e eye_string'
+                print(error)
+                log.error(error)
                 exit()
         else:
-            print('cowsay: error no text added after -e')
+            error = 'No text added after -e'
+            print(error)
+            log.error(error)
             exit()
 
     # "Borg mode", uses == in place of oo for the cow's eyes
     if '-b' in argv:
         eyes = '=='
         text = text.replace('-b ', '')
+        log.trace('Borg mode selected')
 
     # "Greedy", uses $$
     if '-g' in argv:
         eyes = '$$'
         text = text.replace('-g ', '')
+        log.trace('Greedy selected')
 
     # "paranoid", uses @@
     if '-p' in argv:
         eyes = '@@'
         text = text.replace('-p ', '')
+        log.trace('Paranoid selected')
+
     # "Stoned", uses ** to represent bloodshot eyes
     # plus a descending U to represent an extruded tongue
-
     if '-s' in argv:
         eyes = '**'
         tongue = 'U '
         text = text.replace('-s ', '')
+        log.trace('Stoned selected')
 
     # "Tired", uses --
     if '-t' in argv:
         eyes = '--'
         text = text.replace('-t ', '')
+        log.trace('Tired selected')
 
     # "Wired", uses OO
     if '-w' in argv:
         eyes = 'OO'
         text = text.replace('-w ', '')
+        log.trace('Wired selected')
 
     # "Youthful", uses .. to represent smaller eyes
     if animal == 'small' or '-y' in argv:
         eyes = '..'
         text = text.replace('-y ', '')
+        log.trace('Youthful selected')
 
     # Manually specifies the cow's tongue shape
     if '-T' in argv:
@@ -77,11 +101,16 @@ def cowsay(text, animal='default'):
                 if len(tongue) < 2:
                     tongue = tongue + ' '
                 text = text.replace(f'-T {tongue}', '')
+                log.trace(f'Custom tongue selected ({tongue})')
             else:
-                print('cowsay: error no text added after -T tongue_string')
+                error = 'No text added after -T tongue_string'
+                print(error)
+                log.error(error)
                 exit()
         else:
-            print('cowsay: error no text added after -T')
+            error = 'No text added after -T'
+            print(error)
+            log.error(error)
             exit()
 
     # "Dead", uses XX, plus a descending U to represent an extruded tongue
@@ -92,6 +121,7 @@ def cowsay(text, animal='default'):
             eyes = eyes.lower()
         tongue = 'U '
         text = text.replace('-d ', '').replace(eyes, '')
+        log.trace('Dead selected')
 
     # Adds a third eye if three-eyes is selected
     if animal == 'three-eyes':
@@ -101,7 +131,9 @@ def cowsay(text, animal='default'):
 
 def bubble(text):
     if text == '':
-        print('error: No text was entered after the parameters')
+        error = 'No text was entered after the parameters'
+        print(error)
+        log.error(error)
         exit()
     lines = wrap(text, 38)
 
@@ -123,6 +155,7 @@ def bubble(text):
 
             bottom = top.replace('_', '-')
     bubble = top + '\n' + middle + '\n' + bottom
+    log.info('Speech bubble successfully added')
     return bubble
 
 
@@ -130,16 +163,21 @@ def cow(animal, eyes, tongue):
     with open(f'cows/{animal}.txt', 'r') as myAnimal:
         data = myAnimal.read().replace('$eyes', eyes)
         data = data.replace('$tongue', tongue)
+    log.info(f'"Cow" successfully added ({animal})')
     return '\n' + data
 
 
 def handler():
     if len(argv) < 2:
-        print(f'Try again.\nUsage: {argv[0]} [-h] [-l] message')
+        error = f'Try again. Usage: {argv[0]} [-h] [-l] message'
+        print(error)
+        log.error(error)
 
     elif len(argv) >= 2 and '-h' in argv:
         params = '[-h] [-l] [-f cowfile] [-e eyes] [-T tongue] message'
-        print(f'Usage: {argv[0]} {params}')
+        usage = f'Usage: {argv[0]} {params}'
+        print(usage)
+        log.info(usage)
 
     elif len(argv) >= 2 and '-l' in argv:
         print(' '.join([cow for cow in cow_list]))
@@ -153,7 +191,9 @@ def handler():
         if animal.lower() in cow_list:
             print(cowsay(text, animal))
         else:
-            print(f'cowsay: Could not find {animal} cowfile')
+            error = f'Could not find {animal} cowfile'
+            print(error)
+            log.error(error)
     else:
         text = ' '.join([arg for arg in argv if arg != argv[0]])
         print(cowsay(text))
