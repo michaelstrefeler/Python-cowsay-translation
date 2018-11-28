@@ -2,17 +2,6 @@ from sys import argv, stdout
 from textwrap import wrap
 import logbook
 
-level = logbook.TRACE
-log_filename = 'log.txt'
-
-if not log_filename:
-    logbook.StreamHandler(stdout, level=level).push_application()
-else:
-    logbook.TimedRotatingFileHandler(log_filename, level=level
-                                     ).push_application()
-
-log = logbook.Logger('Cowsay')
-
 # List of all available cows
 cow_list = [
     'apt', 'beavis.zen', 'bong', 'bud-frogs', 'bunny', 'calvin', 'cheese',
@@ -200,4 +189,14 @@ def handler():
 
 
 if __name__ == '__main__':
+    level = logbook.TRACE
+    log_filename = 'log.txt'
+
+    if not log_filename:
+        logbook.StreamHandler(stdout, level=level).push_application()
+    else:
+        logbook.TimedRotatingFileHandler(log_filename, level=level
+                                         ).push_application()
+
+    log = logbook.Logger('Cowsay')
     handler()
